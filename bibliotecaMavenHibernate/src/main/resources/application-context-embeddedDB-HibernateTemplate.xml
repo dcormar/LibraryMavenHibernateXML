@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+	<jdbc:embedded-database id="dataSource" type="DERBY">
+		<jdbc:script location="classpath:db/sql/create-db.sql" />
+		<jdbc:script location="classpath:db/sql/insert-data.sql" />
+	</jdbc:embedded-database>
+	
+
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="mappingResources">
+			<list>
+				<value>hibernate/Libro.hbm.xml</value>
+				<value>hibernate/Editorial.hbm.xml</value>
+				<value>hibernate/Autor.hbm.xml</value>
+				<value>hibernate/Direccion.hbm.xml</value>
+			</list>
+		</property>
+
+        <!-- En las propiedades hemos quitado el de session a nivel de hilo porque en Hibernate 4 entra en 
+             conflicto con HibernateTemplate -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.DerbyDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.connection.pool_size">1</prop>
+				<prop key="hibernate.hbm2ddl.auto">validate</prop>
+				<prop key="hibernate.cache.provider_class">
+					org.hibernate.cache.NoCacheProvider
+				</prop>
+			</props>
+		</property>
+	</bean>
+
+    <!-- Para Hibernate 4 es necesario utilizar transacciones con HibernateTemplate 
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	-->
+	<bean id="hbtTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="checkWriteOperations" value="false"/> <!-- para evitar que compruebe que se realiza transacciones -->
+	</bean>
+	
+	<bean id="autorDAO" class="com.davidcortijo.persistencia.impl.AutoresDAO">
+		<property name="template" ref="hbtTemplate"/>
+		<!-- <property name="plantilla" ref="template" /> -->
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+		<!--<property name="AutorMapper" ref="mapperAutor" /> -->
+	</bean>
+	<bean id="editorialDAO" class="com.davidcortijo.persistencia.impl.EditorialesDAO">
+		<property name="template" ref="hbtTemplate"/>
+		<!-- <property name="plantilla" ref="template" /> -->
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+		<!--<property name="editorialMapper" ref="mapperEditorial" />-->
+	</bean>
+	<bean id="direccionDAO" class="com.davidcortijo.persistencia.impl.DireccionesDAO">
+		<property name="template" ref="hbtTemplate"/>
+		<!-- <property name="plantilla" ref="template" /> -->
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+		<!--<property name="DireccionMapper" ref="mapperDireccion" />-->
+	</bean>
+		
+	<bean id="autoresDTO" class="com.davidcortijo.negocio.impl.AutoresDTO">
+           <property name="dao" ref="autorDAO" />
+    </bean>
+    <bean id="editorialesDTO" class="com.davidcortijo.negocio.impl.EditorialesDTO">
+           <property name="dao" ref="editorialDAO" />
+    </bean>
+	
+	
+	<bean id="editorial1" class="com.davidcortijo.modelo.Editorial">
+		<property name="nombre" value="Las Encinas"></property>
+		<property name="direccion" ref="direccion1">
+		</property>
+		<property name="nif" value="F-12231256"></property>
+	</bean>
+	<bean id="direccion1" class="com.davidcortijo.modelo.Direccion">
+		<property name="calle" value="Calle de la Tortola"/>
+		<property name="numero" value="17"/>
+		<property name="poblacion" value="Arroyo de Valdeusera"/>
+		<property name="cp" value="33753"/>
+		<property name="provincia" value="La Cochabamba"/>
+	</bean>
+	<bean id="autor1" class="com.davidcortijo.modelo.Autor">
+		<property name="nombre" value="Eleuterio Decimononico"/>
+		<property name="nacionalidad" value="Colombiana"/>
+		<property name="comentarios"
+			value="Premio Nobel de Literatura 2004"/>		
+	</bean>
+	<bean id="libro1" class="com.davidcortijo.modelo.Libro">
+		<property name="isbn" value="3344589134NE"/>
+		<property name="titulo"
+			value="La efimera presencia de las palomas">
+		</property>
+		<property name="autores">
+			<list value-type="com.davidcortijo.modelo.Autor">
+				<ref bean="autor1" />
+		
+			</list>
+		</property>
+		<property name="editorial" ref="editorial1"></property>
+		<property name="publicacion" value="2007"></property>
+		<property name="precio" value="14.99"></property>
+		<property name="descripcion"
+			value="Un thriller psicologico con gran impacto en el hemisferio sur">
+		</property>
+	</bean>
+	
+</beans>

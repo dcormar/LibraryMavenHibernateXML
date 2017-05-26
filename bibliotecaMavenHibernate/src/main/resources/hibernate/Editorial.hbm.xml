@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="com.davidcortijo.modelo.Editorial" table="EDITORIALES">
+
+        <!-- clave primaria de un solo campo -->
+            <id name="nif" column="NIF" type="string" length="20">
+                     <generator class="assigned" />
+            </id>
+        
+
+        <!--  Clave primaria compuesta. De varios campos  
+        <composite-id name="pk" class="app.modelo.PersonaPK">
+            <key-property name="telefono" column="TELEFONO" type="long" />
+            <key-property name="dni" column="DNI" type="string" />
+        </composite-id> -->
+
+        <property name="nombre" column="NOMBRE" type="string"
+                  not-null="true" unique="false" length="50" lazy="false"/>
+                  
+		 <!-- unique="true" es lo que marca one-to-one -->
+      		<many-to-one unique="true" name="direccion" column="DIRECCION1" not-null="true"
+                   cascade="all"/>
+		 
+			<!-- relacion one to many con libros --> 
+        	<set name="libros" inverse="true" cascade="all">
+          		<key column="EDITORIALES1" not-null="true" />  <!-- FK de Editorial en tabla LIBROS -->
+          		<one-to-many class="com.davidcortijo.modelo.Libro" />
+      		</set>
+  </class>
+
+</hibernate-mapping>

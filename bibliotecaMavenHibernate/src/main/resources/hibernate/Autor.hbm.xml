@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="com.davidcortijo.modelo.Autor" table="AUTORES">
+
+        <!-- clave primaria de un solo campo -->
+            <id name="id" column="ID" type="integer" length="20">
+                     <generator class="native" />
+            </id>
+        
+
+        <!--  Clave primaria compuesta. De varios campos  
+        <composite-id name="pk" class="app.modelo.PersonaPK">
+            <key-property name="telefono" column="TELEFONO" type="long" />
+            <key-property name="dni" column="DNI" type="string" />
+        </composite-id> -->
+
+        <property name="nombre" column="NOMBRE" type="string"
+                  not-null="true" unique="false" length="100" lazy="false"/>
+                  
+		 <property name="nacionalidad" column="NACIONALIDAD" type="string"
+                  not-null="true" unique="false" length="50" lazy="false"/>
+         
+          <property name="comentarios" column="COMENTARIOS" type="string"
+                  not-null="false" unique="false" length="200" lazy="false"/>
+                  
+         <!-- relacion many to  many con libros -->
+        <set name="libros" table="LIBROS_AUTORES" cascade="all">
+          		<key column="ID_AUTORES" />  <!-- FK de Autor -->
+          		<many-to-many column="ID_LIBROS" class="com.davidcortijo.modelo.Libro" />
+      		</set>
+  </class>
+
+</hibernate-mapping>

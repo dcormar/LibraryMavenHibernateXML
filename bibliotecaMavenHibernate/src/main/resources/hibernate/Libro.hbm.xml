@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE hibernate-mapping PUBLIC
+  "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+  "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+
+  <class name="com.davidcortijo.modelo.Libro" table="LIBROS">
+
+        <!-- clave primaria de un solo campo -->
+            <id name="isbn" column="ISBN" type="string" length="20">
+                     <generator class="assigned" />
+            </id>
+        
+
+        <!--  Clave primaria compuesta. De varios campos  
+        <composite-id name="pk" class="app.modelo.PersonaPK">
+            <key-property name="telefono" column="TELEFONO" type="long" />
+            <key-property name="dni" column="DNI" type="string" />
+        </composite-id> -->
+
+        <property name="titulo" column="TITULO" type="string"
+                  not-null="true" unique="false" length="50" lazy="false"/>
+                  
+		 <property name="descripcion" column="DESCRIPCION" type="string"
+                  not-null="false" unique="false" length="300" lazy="false"/>
+         
+         <property name="precio"  type="big_decimal"
+                  not-null="false" unique="false" lazy="false">
+                  <column name="PRECIO" precision="5" scale="2" />
+                  </property>
+                  
+         <property name="publicacion" column="ANO" type="integer"
+         		    not-null="false" unique="false" lazy="false"/>       
+			
+      		
+      		<!-- relacion many to one con editoriales -->
+        <many-to-one name="editorial" class="com.davidcortijo.modelo.Editorial" column="EDITORIALES1"
+                   not-null="true" />
+      		
+      		<!-- relacion many to  many con autores -->
+        <set name="autores" table="LIBROS_AUTORES" cascade="all">
+          		<key column="ID_LIBROS" />  <!-- FK de Autor -->
+          		<many-to-many column="ID_AUTORES" class="com.davidcortijo.modelo.Autor" />
+      		</set>
+
+  </class>
+
+</hibernate-mapping>
