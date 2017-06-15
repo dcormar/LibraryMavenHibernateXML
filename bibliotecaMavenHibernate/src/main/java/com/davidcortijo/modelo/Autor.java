@@ -1,7 +1,6 @@
 package com.davidcortijo.modelo;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.DisposableBean;
@@ -51,7 +50,7 @@ public class Autor implements InitializingBean, DisposableBean, Serializable {
 
 	@Override
 	public String toString() {
-		return "Autor [nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", comentarios=" + comentarios + "]";
+		return "Autor [nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", comentarios=" + comentarios + ", libros: " + libros.toString() +"]";
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {
