@@ -1,6 +1,6 @@
 package com.davidcortijo.negocio.impl;
 
-import com.davidcortijo.modelo.Direccion;
+
 import com.davidcortijo.modelo.Editorial;
 import com.davidcortijo.persistencia.impl.EditorialesDAO;
 
@@ -17,9 +17,10 @@ public class EditorialesDTO {
         System.out.println(dao.consultarEditorial(nif).toString());
     }
     
-    public void insertarEditorial(String nombre, Direccion direccion,String nif){
-        dao.altaEditorial(new Editorial(nombre, direccion, nif));
-        System.out.println("Autor insertado");
+    public void insertarEditorial(Editorial editorial){
+    	System.out.println("Intentando persistir editorial: " + editorial.toString());
+    	dao.altaEditorial(editorial);
+        System.out.println("Editorial insertada");
     }
 
     public EditorialesDAO getDao() {

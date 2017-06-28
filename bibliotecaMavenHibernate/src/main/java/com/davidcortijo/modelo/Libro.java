@@ -1,7 +1,8 @@
 package com.davidcortijo.modelo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,13 +16,13 @@ public class Libro implements Serializable{
 	@Value("La efimera presencia de las palomas")
 	String titulo;
 	@Autowired
-	List <Autor> autores;
+	Set <Autor> autores;
 	@Autowired
 	Editorial editorial;
 	@Value("2007")
 	int publicacion;
 	@Value("14.99")
-	double precio;
+	BigDecimal precio;
 	@Value("Un thriller psicologico con gran impacto en el hemisferio sur")
 	String descripcion;
 	
@@ -33,7 +34,7 @@ public class Libro implements Serializable{
 	}
 	
 	
-	public Libro(String isbn, String titulo, List<Autor> autores, Editorial editorial, int publicacion, double precio,
+	public Libro(String isbn, String titulo, Set<Autor> autores, Editorial editorial, int publicacion, BigDecimal precio,
 			String descripcion) {
 		super();
 		this.isbn = isbn;
@@ -58,10 +59,10 @@ public class Libro implements Serializable{
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	public List<Autor> getAutores() {
+	public Set<Autor> getAutores() {
 		return autores;
 	}
-	public void setAutores(List<Autor> autores) {
+	public void setAutores(Set<Autor> autores) {
 		this.autores = autores;
 	}
 	public Editorial getEditorial() {
@@ -76,10 +77,10 @@ public class Libro implements Serializable{
 	public void setPublicacion(int publicacion) {
 		this.publicacion = publicacion;
 	}
-	public double getPrecio() {
+	public BigDecimal getPrecio() {
 		return precio;
 	}
-	public void setPrecio(double precio) {
+	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
 	}
 	public String getDescripcion() {

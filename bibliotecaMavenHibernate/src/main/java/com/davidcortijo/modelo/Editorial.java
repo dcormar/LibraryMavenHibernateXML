@@ -1,7 +1,7 @@
 package com.davidcortijo.modelo;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +16,7 @@ public class Editorial implements Serializable{
 	@Value("F-12231256")
 	String nif;
 	
-	List <Libro> libros;
+	Set <Libro> libros;
 	
 	public Editorial() {
 		super();
@@ -51,10 +51,10 @@ public class Editorial implements Serializable{
 		return "Editorial [nombre=" + nombre + ", direccion=" + direccion + ", nif=" + nif + "]";
 	}
 	
-	public List<Libro> getLibros() {
+	public Set<Libro> getLibros() {
 		return libros;
 	}
-	public void setLibros(List<Libro> libros) {
+	public void setLibros(Set<Libro> libros) {
 		this.libros = libros;
 	}
 	

@@ -12,11 +12,11 @@ public class Direccion implements Serializable{
 	//@Value("Calle de la Tortola")
 	String calle;
 	//@Value("17")
-	int numero;
+	String numero;
 	//@Value("Arroyo de Valdeusera")
 	String poblacion;
 	//@Value("33753")
-	int cp;
+	String cp;
 	//@Value("La Cochabamba")
 	String provincia;
 	
@@ -32,7 +32,7 @@ public class Direccion implements Serializable{
 		this.calle = calle;
 	}
 	
-	public Direccion(String calle, int numero, String poblacion, int cp, String provincia) {
+	public Direccion(String calle, String numero, String poblacion, String cp, String provincia) {
 		super();
 		this.calle = calle;
 		this.numero = numero;
@@ -49,11 +49,11 @@ public class Direccion implements Serializable{
 		this.calle = calle;
 	}
 
-	public int getNumero() {
+	public String getNumero() {
 		return numero;
 	}
 
-	public void setNumero(int numero) {
+	public void setNumero(String numero) {
 		this.numero = numero;
 	}
 
@@ -65,11 +65,11 @@ public class Direccion implements Serializable{
 		this.poblacion = poblacion;
 	}
 
-	public int getCp() {
+	public String getCp() {
 		return cp;
 	}
 
-	public void setCp(int cp) {
+	public void setCp(String cp) {
 		this.cp = cp;
 	}
 

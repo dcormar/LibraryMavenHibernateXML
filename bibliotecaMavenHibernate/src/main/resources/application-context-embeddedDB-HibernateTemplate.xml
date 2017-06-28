@@ -70,9 +70,16 @@
 		<!-- <property name="dataSource" ref="dataSource" /> -->
 		<!--<property name="DireccionMapper" ref="mapperDireccion" />-->
 	</bean>
+	<bean id="libroDAO" class="com.davidcortijo.persistencia.impl.LibrosDAO">
+		<property name="template" ref="hbtTemplate"/>
+		<!-- <property name="plantilla" ref="template" /> -->
+		<!-- <property name="dataSource" ref="dataSource" /> -->
+		<!--<property name="AutorMapper" ref="mapperAutor" /> -->
+	</bean>
 		
 	<bean id="autoresDTO" class="com.davidcortijo.negocio.impl.AutoresDTO">
            <property name="dao" ref="autorDAO" />
+           <property name="librosDao" ref="libroDAO"></property>
     </bean>
     <bean id="editorialesDTO" class="com.davidcortijo.negocio.impl.EditorialesDTO">
            <property name="dao" ref="editorialDAO" />
@@ -96,7 +103,12 @@
 		<property name="nombre" value="Eleuterio Decimononico"/>
 		<property name="nacionalidad" value="Colombiana"/>
 		<property name="comentarios"
-			value="Premio Nobel de Literatura 2004"/>		
+			value="Premio Nobel de Literatura 2004"/>
+			<property name="libros">
+				<set value-type="com.davidcortijo.modelo.Libro">
+					<ref bean="libro1"/>				
+				</set>
+			</property>		
 	</bean>
 	<bean id="libro1" class="com.davidcortijo.modelo.Libro">
 		<property name="isbn" value="3344589134NE"/>

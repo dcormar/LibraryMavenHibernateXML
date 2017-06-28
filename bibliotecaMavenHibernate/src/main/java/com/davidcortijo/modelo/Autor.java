@@ -24,10 +24,11 @@ public class Autor implements InitializingBean, DisposableBean, Serializable {
 		super();
 		System.out.println("Creando bean Autor: " + Integer.toHexString(System.identityHashCode(this))+ " - " + this);
 	}
-	public Autor(String nombre, String nacionalidad, String comentarios) {
+	public Autor(String nombre, String nacionalidad, String comentarios, Set<Libro> libros) {
 		this.nombre = nombre;
 		this.nacionalidad = nacionalidad;
 		this.comentarios = comentarios;
+		this.libros = libros;
 	}
 	public String getNombre() {
 		return nombre;
@@ -50,7 +51,7 @@ public class Autor implements InitializingBean, DisposableBean, Serializable {
 
 	@Override
 	public String toString() {
-		return "Autor [nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", comentarios=" + comentarios + ", libros: " + libros.toString() +"]";
+		return "Autor [nombre=" + nombre + ", nacionalidad=" + nacionalidad + ", comentarios=" + comentarios  + "]";
 	}
 	@Override
 	public void afterPropertiesSet() throws Exception {

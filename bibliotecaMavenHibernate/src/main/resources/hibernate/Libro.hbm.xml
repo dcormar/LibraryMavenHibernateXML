@@ -37,13 +37,13 @@
       		
       		<!-- relacion many to one con editoriales -->
         <many-to-one name="editorial" class="com.davidcortijo.modelo.Editorial" column="EDITORIALES1"
-                   not-null="true" />
+                   not-null="true" cascade="all"/>
       		
       		<!-- relacion many to  many con autores -->
         <set name="autores" table="LIBROS_AUTORES" cascade="all">
           		<key column="ID_LIBROS" />  <!-- FK de Autor -->
           		<many-to-many column="ID_AUTORES" class="com.davidcortijo.modelo.Autor" />
-      		</set>
+      	</set>
 
   </class>
 

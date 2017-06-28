@@ -30,9 +30,11 @@
                   not-null="false" unique="false" length="200" lazy="false"/>
                   
          <!-- relacion many to  many con libros -->
-        <set name="libros" table="LIBROS_AUTORES" cascade="all">
-          		<key column="ID_AUTORES" />  <!-- FK de Autor -->
-          		<many-to-many column="ID_LIBROS" class="com.davidcortijo.modelo.Libro" />
+        <set name="libros" table="LIBROS_AUTORES" cascade="all" >
+          		<key column="ID_AUTORES" not-null="true"/>  <!-- FK de Autor -->
+          		<many-to-many column="ID_LIBROS" class="com.davidcortijo.modelo.Libro" lazy="false" />
+          		<!-- los libros no son necesarios cargarlos al instante de cargar el autor, solo cuando se consulte por ellos.
+          			Por eso ademas no estan añadidos al "toString()" de Autor.java, porque daría un error. -->
       		</set>
   </class>
 

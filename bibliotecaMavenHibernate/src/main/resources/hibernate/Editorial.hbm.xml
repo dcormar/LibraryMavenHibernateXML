@@ -25,7 +25,7 @@
                   
 		 <!-- unique="true" es lo que marca one-to-one -->
       		<many-to-one unique="true" name="direccion" column="DIRECCION1" not-null="true"
-                   cascade="all"/>
+                   cascade="all" lazy="false"/>
 		 
 			<!-- relacion one to many con libros --> 
         	<set name="libros" inverse="true" cascade="all">
